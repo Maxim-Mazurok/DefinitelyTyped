@@ -14,14 +14,20 @@ gapi.load('client', () => {
         const scope = [
             /** See, edit, download, and permanently delete your contacts */
             'https://www.googleapis.com/auth/contacts',
+            /** See and download contact info automatically saved in your "Other contacts" */
+            'https://www.googleapis.com/auth/contacts.other.readonly',
             /** See and download your contacts */
             'https://www.googleapis.com/auth/contacts.readonly',
+            /** See and download your organization's GSuite directory */
+            'https://www.googleapis.com/auth/directory.readonly',
             /** View your street addresses */
             'https://www.googleapis.com/auth/user.addresses.read',
             /** View your complete date of birth */
             'https://www.googleapis.com/auth/user.birthday.read',
             /** View your email addresses */
             'https://www.googleapis.com/auth/user.emails.read',
+            /** See your gender */
+            'https://www.googleapis.com/auth/user.gender.read',
             /** See your education, work history and org info */
             'https://www.googleapis.com/auth/user.organization.read',
             /** View your phone numbers */
@@ -43,20 +49,14 @@ gapi.load('client', () => {
     });
 
     async function run() {
-        /**
-         * Get a list of contact groups owned by the authenticated user by specifying
-         * a list of contact group resource names.
-         */
+        /** Get a list of contact groups owned by the authenticated user by specifying a list of contact group resource names. */
         await gapi.client.people.contactGroups.batchGet({
             maxMembers: 42,
             resourceNames: "Test string",
         });
         /**
-         * Modify the members of a contact group owned by the authenticated user.
-         *
-         * The only system contact groups that can have members added are
-         * `contactGroups/myContacts` and `contactGroups/starred`. Other system
-         * contact groups are deprecated and can only have contacts removed.
+         * Modify the members of a contact group owned by the authenticated user. The only system contact groups that can have members added are `contactGroups/myContacts` and
+         * `contactGroups/starred`. Other system contact groups are deprecated and can only have contacts removed.
          */
         await gapi.client.people.contactGroups.members.modify({
             resourceName: "Test string",
@@ -85,11 +85,8 @@ gapi.load('client', () => {
             },
         });
         /**
-         * Modify the members of a contact group owned by the authenticated user.
-         *
-         * The only system contact groups that can have members added are
-         * `contactGroups/myContacts` and `contactGroups/starred`. Other system
-         * contact groups are deprecated and can only have contacts removed.
+         * Modify the members of a contact group owned by the authenticated user. The only system contact groups that can have members added are `contactGroups/myContacts` and
+         * `contactGroups/starred`. Other system contact groups are deprecated and can only have contacts removed.
          */
         await gapi.client.people.contactGroups.members.modify({
             resourceName: "Test string",
@@ -99,20 +96,14 @@ gapi.load('client', () => {
             resourceNamesToRemove: [
                 "Test string"            ],
         });
-        /**
-         * Delete an existing contact group owned by the authenticated user by
-         * specifying a contact group resource name.
-         */
+        /** Delete an existing contact group owned by the authenticated user by specifying a contact group resource name. */
         await gapi.client.people.contactGroups.delete({
             deleteContacts: true,
             resourceName: "Test string",
         });
         /**
-         * Modify the members of a contact group owned by the authenticated user.
-         *
-         * The only system contact groups that can have members added are
-         * `contactGroups/myContacts` and `contactGroups/starred`. Other system
-         * contact groups are deprecated and can only have contacts removed.
+         * Modify the members of a contact group owned by the authenticated user. The only system contact groups that can have members added are `contactGroups/myContacts` and
+         * `contactGroups/starred`. Other system contact groups are deprecated and can only have contacts removed.
          */
         await gapi.client.people.contactGroups.members.modify({
             resourceName: "Test string",
@@ -122,20 +113,14 @@ gapi.load('client', () => {
             resourceNamesToRemove: [
                 "Test string"            ],
         });
-        /**
-         * Get a specific contact group owned by the authenticated user by specifying
-         * a contact group resource name.
-         */
+        /** Get a specific contact group owned by the authenticated user by specifying a contact group resource name. */
         await gapi.client.people.contactGroups.get({
             maxMembers: 42,
             resourceName: "Test string",
         });
         /**
-         * Modify the members of a contact group owned by the authenticated user.
-         *
-         * The only system contact groups that can have members added are
-         * `contactGroups/myContacts` and `contactGroups/starred`. Other system
-         * contact groups are deprecated and can only have contacts removed.
+         * Modify the members of a contact group owned by the authenticated user. The only system contact groups that can have members added are `contactGroups/myContacts` and
+         * `contactGroups/starred`. Other system contact groups are deprecated and can only have contacts removed.
          */
         await gapi.client.people.contactGroups.members.modify({
             resourceName: "Test string",
@@ -145,21 +130,15 @@ gapi.load('client', () => {
             resourceNamesToRemove: [
                 "Test string"            ],
         });
-        /**
-         * List all contact groups owned by the authenticated user. Members of the
-         * contact groups are not populated.
-         */
+        /** List all contact groups owned by the authenticated user. Members of the contact groups are not populated. */
         await gapi.client.people.contactGroups.list({
             pageSize: 42,
             pageToken: "Test string",
             syncToken: "Test string",
         });
         /**
-         * Modify the members of a contact group owned by the authenticated user.
-         *
-         * The only system contact groups that can have members added are
-         * `contactGroups/myContacts` and `contactGroups/starred`. Other system
-         * contact groups are deprecated and can only have contacts removed.
+         * Modify the members of a contact group owned by the authenticated user. The only system contact groups that can have members added are `contactGroups/myContacts` and
+         * `contactGroups/starred`. Other system contact groups are deprecated and can only have contacts removed.
          */
         await gapi.client.people.contactGroups.members.modify({
             resourceName: "Test string",
@@ -169,10 +148,7 @@ gapi.load('client', () => {
             resourceNamesToRemove: [
                 "Test string"            ],
         });
-        /**
-         * Update the name of an existing contact group owned by the authenticated
-         * user.
-         */
+        /** Update the name of an existing contact group owned by the authenticated user. */
         await gapi.client.people.contactGroups.update({
             resourceName: "Test string",
         }, {
@@ -192,11 +168,8 @@ gapi.load('client', () => {
             },
         });
         /**
-         * Modify the members of a contact group owned by the authenticated user.
-         *
-         * The only system contact groups that can have members added are
-         * `contactGroups/myContacts` and `contactGroups/starred`. Other system
-         * contact groups are deprecated and can only have contacts removed.
+         * Modify the members of a contact group owned by the authenticated user. The only system contact groups that can have members added are `contactGroups/myContacts` and
+         * `contactGroups/starred`. Other system contact groups are deprecated and can only have contacts removed.
          */
         await gapi.client.people.contactGroups.members.modify({
             resourceName: "Test string",
@@ -206,8 +179,30 @@ gapi.load('client', () => {
             resourceNamesToRemove: [
                 "Test string"            ],
         });
-        /** Create a new contact and return the person resource for that contact. */
+        /** Copies an "Other contact" to a new contact in the user's "myContacts" group */
+        await gapi.client.people.otherContacts.copyOtherContactToMyContactsGroup({
+            resourceName: "Test string",
+        }, {
+            copyMask: "Test string",
+            readMask: "Test string",
+            sources: [
+                "Test string"            ],
+        });
+        /** List all "Other contacts", that is contacts that are not in a contact group. "Other contacts" are typically auto created contacts from interactions. */
+        await gapi.client.people.otherContacts.list({
+            pageSize: 42,
+            pageToken: "Test string",
+            readMask: "Test string",
+            requestSyncToken: true,
+            syncToken: "Test string",
+        });
+        /**
+         * Create a new contact and return the person resource for that contact. The request throws a 400 error if more than one field is specified on a field that is a singleton for contact
+         * sources: * biographies * birthdays * genders * names
+         */
         await gapi.client.people.people.createContact({
+            personFields: "Test string",
+            sources: "Test string",
         }, {
             addresses: [
                 {
@@ -321,6 +316,47 @@ gapi.load('client', () => {
                     },
                     value: "Test string",
                 }            ],
+            calendarUrls: [
+                {
+                    formattedType: "Test string",
+                    metadata: {
+                        primary: true,
+                        source: {
+                            etag: "Test string",
+                            id: "Test string",
+                            profileMetadata: {
+                                objectType: "Test string",
+                                userTypes: [
+                                    "Test string"                                ],
+                            },
+                            type: "Test string",
+                            updateTime: "Test string",
+                        },
+                        verified: true,
+                    },
+                    type: "Test string",
+                    url: "Test string",
+                }            ],
+            clientData: [
+                {
+                    key: "Test string",
+                    metadata: {
+                        primary: true,
+                        source: {
+                            etag: "Test string",
+                            id: "Test string",
+                            profileMetadata: {
+                                objectType: "Test string",
+                                userTypes: [
+                                    "Test string"                                ],
+                            },
+                            type: "Test string",
+                            updateTime: "Test string",
+                        },
+                        verified: true,
+                    },
+                    value: "Test string",
+                }            ],
             coverPhotos: [
                 {
                     default: true,
@@ -389,8 +425,49 @@ gapi.load('client', () => {
                     },
                     type: "Test string",
                 }            ],
+            externalIds: [
+                {
+                    formattedType: "Test string",
+                    metadata: {
+                        primary: true,
+                        source: {
+                            etag: "Test string",
+                            id: "Test string",
+                            profileMetadata: {
+                                objectType: "Test string",
+                                userTypes: [
+                                    "Test string"                                ],
+                            },
+                            type: "Test string",
+                            updateTime: "Test string",
+                        },
+                        verified: true,
+                    },
+                    type: "Test string",
+                    value: "Test string",
+                }            ],
+            fileAses: [
+                {
+                    metadata: {
+                        primary: true,
+                        source: {
+                            etag: "Test string",
+                            id: "Test string",
+                            profileMetadata: {
+                                objectType: "Test string",
+                                userTypes: [
+                                    "Test string"                                ],
+                            },
+                            type: "Test string",
+                            updateTime: "Test string",
+                        },
+                        verified: true,
+                    },
+                    value: "Test string",
+                }            ],
             genders: [
                 {
+                    addressMeAs: "Test string",
                     formattedValue: "Test string",
                     metadata: {
                         primary: true,
@@ -470,6 +547,31 @@ gapi.load('client', () => {
                     },
                     value: "Test string",
                 }            ],
+            locations: [
+                {
+                    buildingId: "Test string",
+                    current: true,
+                    deskCode: "Test string",
+                    floor: "Test string",
+                    floorSection: "Test string",
+                    metadata: {
+                        primary: true,
+                        source: {
+                            etag: "Test string",
+                            id: "Test string",
+                            profileMetadata: {
+                                objectType: "Test string",
+                                userTypes: [
+                                    "Test string"                                ],
+                            },
+                            type: "Test string",
+                            updateTime: "Test string",
+                        },
+                        verified: true,
+                    },
+                    type: "Test string",
+                    value: "Test string",
+                }            ],
             memberships: [
                 {
                     contactGroupMembership: {
@@ -515,6 +617,27 @@ gapi.load('client', () => {
                         updateTime: "Test string",
                     }                ],
             },
+            miscKeywords: [
+                {
+                    formattedType: "Test string",
+                    metadata: {
+                        primary: true,
+                        source: {
+                            etag: "Test string",
+                            id: "Test string",
+                            profileMetadata: {
+                                objectType: "Test string",
+                                userTypes: [
+                                    "Test string"                                ],
+                            },
+                            type: "Test string",
+                            updateTime: "Test string",
+                        },
+                        verified: true,
+                    },
+                    type: "Test string",
+                    value: "Test string",
+                }            ],
             names: [
                 {
                     displayName: "Test string",
@@ -545,6 +668,7 @@ gapi.load('client', () => {
                     phoneticHonorificPrefix: "Test string",
                     phoneticHonorificSuffix: "Test string",
                     phoneticMiddleName: "Test string",
+                    unstructuredName: "Test string",
                 }            ],
             nicknames: [
                 {
@@ -849,12 +973,7 @@ gapi.load('client', () => {
                     value: "Test string",
                 }            ],
         });
-        /**
-         * Provides a list of the authenticated user's contacts merged with any
-         * connected profiles.
-         *
-         * The request throws a 400 error if 'personFields' is not specified.
-         */
+        /** Provides a list of the authenticated user's contacts. The request throws a 400 error if 'personFields' is not specified. */
         await gapi.client.people.people.connections.list({
             pageSize: 42,
             pageToken: "Test string",
@@ -863,18 +982,14 @@ gapi.load('client', () => {
             requestSyncToken: true,
             resourceName: "Test string",
             sortOrder: "Test string",
+            sources: "Test string",
             syncToken: "Test string",
         });
         /** Delete a contact person. Any non-contact data will not be deleted. */
         await gapi.client.people.people.deleteContact({
             resourceName: "Test string",
         });
-        /**
-         * Provides a list of the authenticated user's contacts merged with any
-         * connected profiles.
-         *
-         * The request throws a 400 error if 'personFields' is not specified.
-         */
+        /** Provides a list of the authenticated user's contacts. The request throws a 400 error if 'personFields' is not specified. */
         await gapi.client.people.people.connections.list({
             pageSize: 42,
             pageToken: "Test string",
@@ -883,19 +998,16 @@ gapi.load('client', () => {
             requestSyncToken: true,
             resourceName: "Test string",
             sortOrder: "Test string",
+            sources: "Test string",
             syncToken: "Test string",
         });
         /** Delete a contact's photo. */
         await gapi.client.people.people.deleteContactPhoto({
             personFields: "Test string",
             resourceName: "Test string",
+            sources: "Test string",
         });
-        /**
-         * Provides a list of the authenticated user's contacts merged with any
-         * connected profiles.
-         *
-         * The request throws a 400 error if 'personFields' is not specified.
-         */
+        /** Provides a list of the authenticated user's contacts. The request throws a 400 error if 'personFields' is not specified. */
         await gapi.client.people.people.connections.list({
             pageSize: 42,
             pageToken: "Test string",
@@ -904,25 +1016,17 @@ gapi.load('client', () => {
             requestSyncToken: true,
             resourceName: "Test string",
             sortOrder: "Test string",
+            sources: "Test string",
             syncToken: "Test string",
         });
-        /**
-         * Provides information about a person by specifying a resource name. Use
-         * `people/me` to indicate the authenticated user.
-         *
-         * The request throws a 400 error if 'personFields' is not specified.
-         */
+        /** Provides information about a person by specifying a resource name. Use `people/me` to indicate the authenticated user. The request throws a 400 error if 'personFields' is not specified. */
         await gapi.client.people.people.get({
             personFields: "Test string",
             "requestMask.includeField": "Test string",
             resourceName: "Test string",
+            sources: "Test string",
         });
-        /**
-         * Provides a list of the authenticated user's contacts merged with any
-         * connected profiles.
-         *
-         * The request throws a 400 error if 'personFields' is not specified.
-         */
+        /** Provides a list of the authenticated user's contacts. The request throws a 400 error if 'personFields' is not specified. */
         await gapi.client.people.people.connections.list({
             pageSize: 42,
             pageToken: "Test string",
@@ -931,26 +1035,20 @@ gapi.load('client', () => {
             requestSyncToken: true,
             resourceName: "Test string",
             sortOrder: "Test string",
+            sources: "Test string",
             syncToken: "Test string",
         });
         /**
-         * Provides information about a list of specific people by specifying a list
-         * of requested resource names. Use `people/me` to indicate the authenticated
-         * user.
-         *
-         * The request throws a 400 error if 'personFields' is not specified.
+         * Provides information about a list of specific people by specifying a list of requested resource names. Use `people/me` to indicate the authenticated user. The request throws a 400 error
+         * if 'personFields' is not specified.
          */
         await gapi.client.people.people.getBatchGet({
             personFields: "Test string",
             "requestMask.includeField": "Test string",
             resourceNames: "Test string",
+            sources: "Test string",
         });
-        /**
-         * Provides a list of the authenticated user's contacts merged with any
-         * connected profiles.
-         *
-         * The request throws a 400 error if 'personFields' is not specified.
-         */
+        /** Provides a list of the authenticated user's contacts. The request throws a 400 error if 'personFields' is not specified. */
         await gapi.client.people.people.connections.list({
             pageSize: 42,
             pageToken: "Test string",
@@ -959,25 +1057,64 @@ gapi.load('client', () => {
             requestSyncToken: true,
             resourceName: "Test string",
             sortOrder: "Test string",
+            sources: "Test string",
+            syncToken: "Test string",
+        });
+        /** Provides a list of domain profiles and domain contacts in the authenticated user's domain directory. */
+        await gapi.client.people.people.listDirectoryPeople({
+            mergeSources: "Test string",
+            pageSize: 42,
+            pageToken: "Test string",
+            readMask: "Test string",
+            requestSyncToken: true,
+            sources: "Test string",
+            syncToken: "Test string",
+        });
+        /** Provides a list of the authenticated user's contacts. The request throws a 400 error if 'personFields' is not specified. */
+        await gapi.client.people.people.connections.list({
+            pageSize: 42,
+            pageToken: "Test string",
+            personFields: "Test string",
+            "requestMask.includeField": "Test string",
+            requestSyncToken: true,
+            resourceName: "Test string",
+            sortOrder: "Test string",
+            sources: "Test string",
+            syncToken: "Test string",
+        });
+        /** Provides a list of domain profiles and domain contacts in the authenticated user's domain directory that match the search query. */
+        await gapi.client.people.people.searchDirectoryPeople({
+            mergeSources: "Test string",
+            pageSize: 42,
+            pageToken: "Test string",
+            query: "Test string",
+            readMask: "Test string",
+            sources: "Test string",
+        });
+        /** Provides a list of the authenticated user's contacts. The request throws a 400 error if 'personFields' is not specified. */
+        await gapi.client.people.people.connections.list({
+            pageSize: 42,
+            pageToken: "Test string",
+            personFields: "Test string",
+            "requestMask.includeField": "Test string",
+            requestSyncToken: true,
+            resourceName: "Test string",
+            sortOrder: "Test string",
+            sources: "Test string",
             syncToken: "Test string",
         });
         /**
-         * Update contact data for an existing contact person. Any non-contact data
-         * will not be modified.
-         *
-         * The request throws a 400 error if `updatePersonFields` is not specified.
-         *
-         * The request throws a 400 error if `person.metadata.sources` is not
-         * specified for the contact to be updated.
-         *
-         * The request throws a 400 error with an error with reason
-         * `"failedPrecondition"` if `person.metadata.sources.etag` is different than
-         * the contact's etag, which indicates the contact has changed since its data
-         * was read. Clients should get the latest person and re-apply their updates
-         * to the latest person.
+         * Update contact data for an existing contact person. Any non-contact data will not be modified. Any non-contact data in the person to update will be ignored. All fields specified in the
+         * `update_mask` will be replaced. The server returns a 400 error if `person.metadata.sources` is not specified for the contact to be updated or if there is no contact source. The server
+         * returns a 400 error with reason `"failedPrecondition"` if `person.metadata.sources.etag` is different than the contact's etag, which indicates the contact has changed since its data was
+         * read. Clients should get the latest person and merge their updates into the latest person. The server returns a 400 error if `memberships` are being updated and there are no contact
+         * group memberships specified on the person. The server returns a 400 error if more than one field is specified on a field that is a singleton for contact sources: * biographies *
+         * birthdays * genders * names
          */
         await gapi.client.people.people.updateContact({
+            personFields: "Test string",
             resourceName: "Test string",
+            sources: "Test string",
             updatePersonFields: "Test string",
         }, {
             addresses: [
@@ -1092,6 +1229,47 @@ gapi.load('client', () => {
                     },
                     value: "Test string",
                 }            ],
+            calendarUrls: [
+                {
+                    formattedType: "Test string",
+                    metadata: {
+                        primary: true,
+                        source: {
+                            etag: "Test string",
+                            id: "Test string",
+                            profileMetadata: {
+                                objectType: "Test string",
+                                userTypes: [
+                                    "Test string"                                ],
+                            },
+                            type: "Test string",
+                            updateTime: "Test string",
+                        },
+                        verified: true,
+                    },
+                    type: "Test string",
+                    url: "Test string",
+                }            ],
+            clientData: [
+                {
+                    key: "Test string",
+                    metadata: {
+                        primary: true,
+                        source: {
+                            etag: "Test string",
+                            id: "Test string",
+                            profileMetadata: {
+                                objectType: "Test string",
+                                userTypes: [
+                                    "Test string"                                ],
+                            },
+                            type: "Test string",
+                            updateTime: "Test string",
+                        },
+                        verified: true,
+                    },
+                    value: "Test string",
+                }            ],
             coverPhotos: [
                 {
                     default: true,
@@ -1160,8 +1338,49 @@ gapi.load('client', () => {
                     },
                     type: "Test string",
                 }            ],
+            externalIds: [
+                {
+                    formattedType: "Test string",
+                    metadata: {
+                        primary: true,
+                        source: {
+                            etag: "Test string",
+                            id: "Test string",
+                            profileMetadata: {
+                                objectType: "Test string",
+                                userTypes: [
+                                    "Test string"                                ],
+                            },
+                            type: "Test string",
+                            updateTime: "Test string",
+                        },
+                        verified: true,
+                    },
+                    type: "Test string",
+                    value: "Test string",
+                }            ],
+            fileAses: [
+                {
+                    metadata: {
+                        primary: true,
+                        source: {
+                            etag: "Test string",
+                            id: "Test string",
+                            profileMetadata: {
+                                objectType: "Test string",
+                                userTypes: [
+                                    "Test string"                                ],
+                            },
+                            type: "Test string",
+                            updateTime: "Test string",
+                        },
+                        verified: true,
+                    },
+                    value: "Test string",
+                }            ],
             genders: [
                 {
+                    addressMeAs: "Test string",
                     formattedValue: "Test string",
                     metadata: {
                         primary: true,
@@ -1241,6 +1460,31 @@ gapi.load('client', () => {
                     },
                     value: "Test string",
                 }            ],
+            locations: [
+                {
+                    buildingId: "Test string",
+                    current: true,
+                    deskCode: "Test string",
+                    floor: "Test string",
+                    floorSection: "Test string",
+                    metadata: {
+                        primary: true,
+                        source: {
+                            etag: "Test string",
+                            id: "Test string",
+                            profileMetadata: {
+                                objectType: "Test string",
+                                userTypes: [
+                                    "Test string"                                ],
+                            },
+                            type: "Test string",
+                            updateTime: "Test string",
+                        },
+                        verified: true,
+                    },
+                    type: "Test string",
+                    value: "Test string",
+                }            ],
             memberships: [
                 {
                     contactGroupMembership: {
@@ -1286,6 +1530,27 @@ gapi.load('client', () => {
                         updateTime: "Test string",
                     }                ],
             },
+            miscKeywords: [
+                {
+                    formattedType: "Test string",
+                    metadata: {
+                        primary: true,
+                        source: {
+                            etag: "Test string",
+                            id: "Test string",
+                            profileMetadata: {
+                                objectType: "Test string",
+                                userTypes: [
+                                    "Test string"                                ],
+                            },
+                            type: "Test string",
+                            updateTime: "Test string",
+                        },
+                        verified: true,
+                    },
+                    type: "Test string",
+                    value: "Test string",
+                }            ],
             names: [
                 {
                     displayName: "Test string",
@@ -1316,6 +1581,7 @@ gapi.load('client', () => {
                     phoneticHonorificPrefix: "Test string",
                     phoneticHonorificSuffix: "Test string",
                     phoneticMiddleName: "Test string",
+                    unstructuredName: "Test string",
                 }            ],
             nicknames: [
                 {
@@ -1620,12 +1886,7 @@ gapi.load('client', () => {
                     value: "Test string",
                 }            ],
         });
-        /**
-         * Provides a list of the authenticated user's contacts merged with any
-         * connected profiles.
-         *
-         * The request throws a 400 error if 'personFields' is not specified.
-         */
+        /** Provides a list of the authenticated user's contacts. The request throws a 400 error if 'personFields' is not specified. */
         await gapi.client.people.people.connections.list({
             pageSize: 42,
             pageToken: "Test string",
@@ -1634,6 +1895,7 @@ gapi.load('client', () => {
             requestSyncToken: true,
             resourceName: "Test string",
             sortOrder: "Test string",
+            sources: "Test string",
             syncToken: "Test string",
         });
         /** Update a contact's photo. */
@@ -1642,13 +1904,10 @@ gapi.load('client', () => {
         }, {
             personFields: "Test string",
             photoBytes: "Test string",
+            sources: [
+                "Test string"            ],
         });
-        /**
-         * Provides a list of the authenticated user's contacts merged with any
-         * connected profiles.
-         *
-         * The request throws a 400 error if 'personFields' is not specified.
-         */
+        /** Provides a list of the authenticated user's contacts. The request throws a 400 error if 'personFields' is not specified. */
         await gapi.client.people.people.connections.list({
             pageSize: 42,
             pageToken: "Test string",
@@ -1657,6 +1916,7 @@ gapi.load('client', () => {
             requestSyncToken: true,
             resourceName: "Test string",
             sortOrder: "Test string",
+            sources: "Test string",
             syncToken: "Test string",
         });
     }
