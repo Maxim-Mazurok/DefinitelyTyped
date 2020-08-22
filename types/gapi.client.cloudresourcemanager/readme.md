@@ -1,409 +1,123 @@
-# TypeScript typings for Google Cloud Resource Manager API v1
-The Google Cloud Resource Manager API provides methods for creating, reading, and updating project metadata.
+# TypeScript typings for Cloud Resource Manager API v2
+
+Creates, reads, and updates metadata for Google Cloud Platform resource containers.
 For detailed description please check [documentation](https://cloud.google.com/resource-manager).
 
 ## Installing
 
-Install typings for Google Cloud Resource Manager API:
+Install typings for Cloud Resource Manager API:
+
 ```
-npm install @types/gapi.client.cloudresourcemanager@v1 --save-dev
+npm install @types/gapi.client.cloudresourcemanager@v2 --save-dev
 ```
 
 ## Usage
 
 You need to initialize Google API client in your code:
+
 ```typescript
-gapi.load("client", () => { 
-    // now we can use gapi.client
-    // ... 
+gapi.load('client', () => {
+  // now we can use gapi.client
+  // ...
 });
 ```
 
 Then load api client wrapper:
+
 ```typescript
-gapi.client.load('cloudresourcemanager', 'v1', () => {
-    // now we can use gapi.client.cloudresourcemanager
-    // ... 
+gapi.client.load('cloudresourcemanager', 'v2', () => {
+  // now we can use gapi.client.cloudresourcemanager
+  // ...
 });
 ```
 
 Don't forget to authenticate your client before sending any request to resources:
-```typescript
 
+```typescript
 // declare client_id registered in Google Developers Console
 var client_id = '',
-    scope = [     
-        // View and manage your data across Google Cloud Platform services
-        'https://www.googleapis.com/auth/cloud-platform',
-    
-        // View your data across Google Cloud Platform services
-        'https://www.googleapis.com/auth/cloud-platform.read-only',
+  scope = [ 
+      // View and manage your data across Google Cloud Platform services
+      'https://www.googleapis.com/auth/cloud-platform',
+
+      // View your data across Google Cloud Platform services
+      'https://www.googleapis.com/auth/cloud-platform.read-only',
     ],
     immediate = true;
 // ...
 
-gapi.auth.authorize({ client_id: client_id, scope: scope, immediate: immediate }, authResult => {
+gapi.auth.authorize(
+  { client_id: client_id, scope: scope, immediate: immediate },
+  authResult => {
     if (authResult && !authResult.error) {
-        /* handle succesfull authorization */
+        /* handle successful authorization */
     } else {
         /* handle authorization error */
     }
-});            
+});
 ```
 
-After that you can use Google Cloud Resource Manager API resources:
+After that you can use Cloud Resource Manager API resources:
 
-```typescript 
-    
-/* 
-Clears a `Policy` from a resource.  
+```typescript
+
+/*
+Creates a Folder in the resource hierarchy. Returns an Operation which can be used to track the progress of the folder creation workflow. Upon success the Operation.response field will be populated with the created Folder. In order to succeed, the addition of this new Folder must not violate the Folder naming, height or fanout constraints. + The Folder's display_name must be distinct from all other Folder's that share its parent. + The addition of the Folder must not cause the active Folder hierarchy to exceed a height of 4. Note, the full active + deleted Folder hierarchy is allowed to reach a height of 8; this provides additional headroom when moving folders that contain deleted folders. + The addition of the Folder must not cause the total number of Folders under its parent to exceed 100. If the operation fails due to a folder constraint violation, some errors may be returned by the CreateFolder request, with status code FAILED_PRECONDITION and an error description. Other folder constraint violations will be communicated in the Operation, with the specific PreconditionFailure returned via the details list in the Operation.error field. The caller must have `resourcemanager.folders.create` permission on the identified parent.
 */
-await gapi.client.folders.clearOrgPolicy({ resource: "resource",  }); 
-    
-/* 
-Gets the effective `Policy` on a resource. This is the result of merging
-`Policies` in the resource hierarchy. The returned `Policy` will not have
-an `etag`set because it is a computed `Policy` across multiple resources.  
+await gapi.client.cloudresourcemanager.folders.create({  });
+
+/*
+Requests deletion of a Folder. The Folder is moved into the DELETE_REQUESTED state immediately, and is deleted approximately 30 days later. This method may only be called on an empty Folder in the ACTIVE state, where a Folder is empty if it doesn't contain any Folders or Projects in the ACTIVE state. The caller must have `resourcemanager.folders.delete` permission on the identified folder.
 */
-await gapi.client.folders.getEffectiveOrgPolicy({ resource: "resource",  }); 
-    
-/* 
-Gets a `Policy` on a resource.
+await gapi.client.cloudresourcemanager.folders.delete({ name: "name",  });
 
-If no `Policy` is set on the resource, a `Policy` is returned with default
-values including `POLICY_TYPE_NOT_SET` for the `policy_type oneof`. The
-`etag` value can be used with `SetOrgPolicy()` to create or update a
-`Policy` during read-modify-write.  
+/*
+Retrieves a Folder identified by the supplied resource name. Valid Folder resource names have the format `folders/{folder_id}` (for example, `folders/1234`). The caller must have `resourcemanager.folders.get` permission on the identified folder.
 */
-await gapi.client.folders.getOrgPolicy({ resource: "resource",  }); 
-    
-/* 
-Lists `Constraints` that could be applied on the specified resource.  
+await gapi.client.cloudresourcemanager.folders.get({ name: "name",  });
+
+/*
+Gets the access control policy for a Folder. The returned policy may be empty if no such policy or resource exists. The `resource` field should be the Folder's resource name, e.g. "folders/1234". The caller must have `resourcemanager.folders.getIamPolicy` permission on the identified folder.
 */
-await gapi.client.folders.listAvailableOrgPolicyConstraints({ resource: "resource",  }); 
-    
-/* 
-Lists all the `Policies` set for a particular resource.  
+await gapi.client.cloudresourcemanager.folders.getIamPolicy({ resource: "resource",  });
+
+/*
+Lists the Folders that are direct descendants of supplied parent resource. List provides a strongly consistent view of the Folders underneath the specified parent resource. List returns Folders sorted based upon the (ascending) lexical ordering of their display_name. The caller must have `resourcemanager.folders.list` permission on the identified parent.
 */
-await gapi.client.folders.listOrgPolicies({ resource: "resource",  }); 
-    
-/* 
-Updates the specified `Policy` on the resource. Creates a new `Policy` for
-that `Constraint` on the resource if one does not exist.
+await gapi.client.cloudresourcemanager.folders.list({  });
 
-Not supplying an `etag` on the request `Policy` results in an unconditional
-write of the `Policy`.  
+/*
+Moves a Folder under a new resource parent. Returns an Operation which can be used to track the progress of the folder move workflow. Upon success the Operation.response field will be populated with the moved Folder. Upon failure, a FolderOperationError categorizing the failure cause will be returned - if the failure occurs synchronously then the FolderOperationError will be returned via the Status.details field and if it occurs asynchronously then the FolderOperation will be returned via the Operation.error field. In addition, the Operation.metadata field will be populated with a FolderOperation message as an aid to stateless clients. Folder moves will be rejected if they violate either the naming, height or fanout constraints described in the CreateFolder documentation. The caller must have `resourcemanager.folders.move` permission on the folder's current and proposed new parent.
 */
-await gapi.client.folders.setOrgPolicy({ resource: "resource",  }); 
-    
-/* 
-Create a Lien which applies to the resource denoted by the `parent` field.
+await gapi.client.cloudresourcemanager.folders.move({ name: "name",  });
 
-Callers of this method will require permission on the `parent` resource.
-For example, applying to `projects/1234` requires permission
-`resourcemanager.projects.updateLiens`.
-
-NOTE: Some resources may limit the number of Liens which may be applied.  
+/*
+Updates a Folder, changing its display_name. Changes to the folder display_name will be rejected if they violate either the display_name formatting rules or naming constraints described in the CreateFolder documentation. The Folder's display name must start and end with a letter or digit, may contain letters, digits, spaces, hyphens and underscores and can be no longer than 30 characters. This is captured by the regular expression: [\p{L}\p{N}]([\p{L}\p{N}_- ]{0,28}[\p{L}\p{N}])?. The caller must have `resourcemanager.folders.update` permission on the identified folder. If the update fails due to the unique name constraint then a PreconditionFailure explaining this violation will be returned in the Status.details field.
 */
-await gapi.client.liens.create({  }); 
-    
-/* 
-Delete a Lien by `name`.
+await gapi.client.cloudresourcemanager.folders.patch({ name: "name",  });
 
-Callers of this method will require permission on the `parent` resource.
-For example, a Lien with a `parent` of `projects/1234` requires permission
-`resourcemanager.projects.updateLiens`.  
+/*
+Search for folders that match specific filter criteria. Search provides an eventually consistent view of the folders a user has access to which meet the specified filter criteria. This will only return folders on which the caller has the permission `resourcemanager.folders.get`.
 */
-await gapi.client.liens.delete({ name: "name",  }); 
-    
-/* 
-List all Liens applied to the `parent` resource.
+await gapi.client.cloudresourcemanager.folders.search({  });
 
-Callers of this method will require permission on the `parent` resource.
-For example, a Lien with a `parent` of `projects/1234` requires permission
-`resourcemanager.projects.get`.  
+/*
+Sets the access control policy on a Folder, replacing any existing policy. The `resource` field should be the Folder's resource name, e.g. "folders/1234". The caller must have `resourcemanager.folders.setIamPolicy` permission on the identified folder.
 */
-await gapi.client.liens.list({  }); 
-    
-/* 
-Gets the latest state of a long-running operation.  Clients can use this
-method to poll the operation result at intervals as recommended by the API
-service.  
+await gapi.client.cloudresourcemanager.folders.setIamPolicy({ resource: "resource",  });
+
+/*
+Returns permissions that a caller has on the specified Folder. The `resource` field should be the Folder's resource name, e.g. "folders/1234". There are no permissions required for making this API call.
 */
-await gapi.client.operations.get({ name: "name",  }); 
-    
-/* 
-Clears a `Policy` from a resource.  
+await gapi.client.cloudresourcemanager.folders.testIamPermissions({ resource: "resource",  });
+
+/*
+Cancels the deletion request for a Folder. This method may only be called on a Folder in the DELETE_REQUESTED state. In order to succeed, the Folder's parent must be in the ACTIVE state. In addition, reintroducing the folder into the tree must not violate folder naming, height and fanout constraints described in the CreateFolder documentation. The caller must have `resourcemanager.folders.undelete` permission on the identified folder.
 */
-await gapi.client.organizations.clearOrgPolicy({ resource: "resource",  }); 
-    
-/* 
-Fetches an Organization resource identified by the specified resource name.  
+await gapi.client.cloudresourcemanager.folders.undelete({ name: "name",  });
+
+/*
+Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.
 */
-await gapi.client.organizations.get({ name: "name",  }); 
-    
-/* 
-Gets the effective `Policy` on a resource. This is the result of merging
-`Policies` in the resource hierarchy. The returned `Policy` will not have
-an `etag`set because it is a computed `Policy` across multiple resources.  
-*/
-await gapi.client.organizations.getEffectiveOrgPolicy({ resource: "resource",  }); 
-    
-/* 
-Gets the access control policy for an Organization resource. May be empty
-if no such policy or resource exists. The `resource` field should be the
-organization's resource name, e.g. "organizations/123".
-
-Authorization requires the Google IAM permission
-`resourcemanager.organizations.getIamPolicy` on the specified organization  
-*/
-await gapi.client.organizations.getIamPolicy({ resource: "resource",  }); 
-    
-/* 
-Gets a `Policy` on a resource.
-
-If no `Policy` is set on the resource, a `Policy` is returned with default
-values including `POLICY_TYPE_NOT_SET` for the `policy_type oneof`. The
-`etag` value can be used with `SetOrgPolicy()` to create or update a
-`Policy` during read-modify-write.  
-*/
-await gapi.client.organizations.getOrgPolicy({ resource: "resource",  }); 
-    
-/* 
-Lists `Constraints` that could be applied on the specified resource.  
-*/
-await gapi.client.organizations.listAvailableOrgPolicyConstraints({ resource: "resource",  }); 
-    
-/* 
-Lists all the `Policies` set for a particular resource.  
-*/
-await gapi.client.organizations.listOrgPolicies({ resource: "resource",  }); 
-    
-/* 
-Searches Organization resources that are visible to the user and satisfy
-the specified filter. This method returns Organizations in an unspecified
-order. New Organizations do not necessarily appear at the end of the
-results.
-
-Search will only return organizations on which the user has the permission
-`resourcemanager.organizations.get`  
-*/
-await gapi.client.organizations.search({  }); 
-    
-/* 
-Sets the access control policy on an Organization resource. Replaces any
-existing policy. The `resource` field should be the organization's resource
-name, e.g. "organizations/123".
-
-Authorization requires the Google IAM permission
-`resourcemanager.organizations.setIamPolicy` on the specified organization  
-*/
-await gapi.client.organizations.setIamPolicy({ resource: "resource",  }); 
-    
-/* 
-Updates the specified `Policy` on the resource. Creates a new `Policy` for
-that `Constraint` on the resource if one does not exist.
-
-Not supplying an `etag` on the request `Policy` results in an unconditional
-write of the `Policy`.  
-*/
-await gapi.client.organizations.setOrgPolicy({ resource: "resource",  }); 
-    
-/* 
-Returns permissions that a caller has on the specified Organization.
-The `resource` field should be the organization's resource name,
-e.g. "organizations/123".
-
-There are no permissions required for making this API call.  
-*/
-await gapi.client.organizations.testIamPermissions({ resource: "resource",  }); 
-    
-/* 
-Clears a `Policy` from a resource.  
-*/
-await gapi.client.projects.clearOrgPolicy({ resource: "resource",  }); 
-    
-/* 
-Request that a new Project be created. The result is an Operation which
-can be used to track the creation process. It is automatically deleted
-after a few hours, so there is no need to call DeleteOperation.
-
-Our SLO permits Project creation to take up to 30 seconds at the 90th
-percentile. As of 2016-08-29, we are observing 6 seconds 50th percentile
-latency. 95th percentile latency is around 11 seconds. We recommend
-polling at the 5th second with an exponential backoff.
-
-Authorization requires the Google IAM permission
-`resourcemanager.projects.create` on the specified parent for the new
-project.  
-*/
-await gapi.client.projects.create({  }); 
-    
-/* 
-Marks the Project identified by the specified
-`project_id` (for example, `my-project-123`) for deletion.
-This method will only affect the Project if the following criteria are met:
-
-+ The Project does not have a billing account associated with it.
-+ The Project has a lifecycle state of
-ACTIVE.
-
-This method changes the Project's lifecycle state from
-ACTIVE
-to DELETE_REQUESTED.
-The deletion starts at an unspecified time,
-at which point the Project is no longer accessible.
-
-Until the deletion completes, you can check the lifecycle state
-checked by retrieving the Project with GetProject,
-and the Project remains visible to ListProjects.
-However, you cannot update the project.
-
-After the deletion completes, the Project is not retrievable by
-the  GetProject and
-ListProjects methods.
-
-The caller must have modify permissions for this Project.  
-*/
-await gapi.client.projects.delete({ projectId: "projectId",  }); 
-    
-/* 
-Retrieves the Project identified by the specified
-`project_id` (for example, `my-project-123`).
-
-The caller must have read permissions for this Project.  
-*/
-await gapi.client.projects.get({ projectId: "projectId",  }); 
-    
-/* 
-Gets a list of ancestors in the resource hierarchy for the Project
-identified by the specified `project_id` (for example, `my-project-123`).
-
-The caller must have read permissions for this Project.  
-*/
-await gapi.client.projects.getAncestry({ projectId: "projectId",  }); 
-    
-/* 
-Gets the effective `Policy` on a resource. This is the result of merging
-`Policies` in the resource hierarchy. The returned `Policy` will not have
-an `etag`set because it is a computed `Policy` across multiple resources.  
-*/
-await gapi.client.projects.getEffectiveOrgPolicy({ resource: "resource",  }); 
-    
-/* 
-Returns the IAM access control policy for the specified Project.
-Permission is denied if the policy or the resource does not exist.
-
-Authorization requires the Google IAM permission
-`resourcemanager.projects.getIamPolicy` on the project  
-*/
-await gapi.client.projects.getIamPolicy({ resource: "resource",  }); 
-    
-/* 
-Gets a `Policy` on a resource.
-
-If no `Policy` is set on the resource, a `Policy` is returned with default
-values including `POLICY_TYPE_NOT_SET` for the `policy_type oneof`. The
-`etag` value can be used with `SetOrgPolicy()` to create or update a
-`Policy` during read-modify-write.  
-*/
-await gapi.client.projects.getOrgPolicy({ resource: "resource",  }); 
-    
-/* 
-Lists Projects that are visible to the user and satisfy the
-specified filter. This method returns Projects in an unspecified order.
-New Projects do not necessarily appear at the end of the list.  
-*/
-await gapi.client.projects.list({  }); 
-    
-/* 
-Lists `Constraints` that could be applied on the specified resource.  
-*/
-await gapi.client.projects.listAvailableOrgPolicyConstraints({ resource: "resource",  }); 
-    
-/* 
-Lists all the `Policies` set for a particular resource.  
-*/
-await gapi.client.projects.listOrgPolicies({ resource: "resource",  }); 
-    
-/* 
-Sets the IAM access control policy for the specified Project. Replaces
-any existing policy.
-
-The following constraints apply when using `setIamPolicy()`:
-
-+ Project does not support `allUsers` and `allAuthenticatedUsers` as
-`members` in a `Binding` of a `Policy`.
-
-+ The owner role can be granted only to `user` and `serviceAccount`.
-
-+ Service accounts can be made owners of a project directly
-without any restrictions. However, to be added as an owner, a user must be
-invited via Cloud Platform console and must accept the invitation.
-
-+ A user cannot be granted the owner role using `setIamPolicy()`. The user
-must be granted the owner role using the Cloud Platform Console and must
-explicitly accept the invitation.
-
-+ Invitations to grant the owner role cannot be sent using
-`setIamPolicy()`;
-they must be sent only using the Cloud Platform Console.
-
-+ Membership changes that leave the project without any owners that have
-accepted the Terms of Service (ToS) will be rejected.
-
-+ If the project is not part of an organization, there must be at least
-one owner who has accepted the Terms of Service (ToS) agreement in the
-policy. Calling `setIamPolicy()` to remove the last ToS-accepted owner
-from the policy will fail. This restriction also applies to legacy
-projects that no longer have owners who have accepted the ToS. Edits to
-IAM policies will be rejected until the lack of a ToS-accepting owner is
-rectified.
-
-+ Calling this method requires enabling the App Engine Admin API.
-
-Note: Removing service accounts from policies or changing their roles
-can render services completely inoperable. It is important to understand
-how the service account is being used before removing or updating its
-roles.
-
-Authorization requires the Google IAM permission
-`resourcemanager.projects.setIamPolicy` on the project  
-*/
-await gapi.client.projects.setIamPolicy({ resource: "resource",  }); 
-    
-/* 
-Updates the specified `Policy` on the resource. Creates a new `Policy` for
-that `Constraint` on the resource if one does not exist.
-
-Not supplying an `etag` on the request `Policy` results in an unconditional
-write of the `Policy`.  
-*/
-await gapi.client.projects.setOrgPolicy({ resource: "resource",  }); 
-    
-/* 
-Returns permissions that a caller has on the specified Project.
-
-There are no permissions required for making this API call.  
-*/
-await gapi.client.projects.testIamPermissions({ resource: "resource",  }); 
-    
-/* 
-Restores the Project identified by the specified
-`project_id` (for example, `my-project-123`).
-You can only use this method for a Project that has a lifecycle state of
-DELETE_REQUESTED.
-After deletion starts, the Project cannot be restored.
-
-The caller must have modify permissions for this Project.  
-*/
-await gapi.client.projects.undelete({ projectId: "projectId",  }); 
-    
-/* 
-Updates the attributes of the Project identified by the specified
-`project_id` (for example, `my-project-123`).
-
-The caller must have modify permissions for this Project.  
-*/
-await gapi.client.projects.update({ projectId: "projectId",  });
+await gapi.client.cloudresourcemanager.operations.get({ name: "name",  });
 ```
